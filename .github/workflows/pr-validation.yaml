@@ -27,10 +27,14 @@ jobs:
         run: |
           htmlhint "src/**/*.html"
 
-      - name: Run Stylelint
-        run: |
-          echo '{}' > .stylelintrc.json # Add rules later
-          stylelint "styles/**/*.css"
+      -  name: Run Stylelint
+  run: |
+    echo '{ "extends": "stylelint-config-standard" }' > .stylelintrc.json
+    if ls styles/**/*.css 1> /dev/null 2>&1; then
+      npx stylelint "styles/**/*.css"
+    else
+      echo "No CSS files found. Skipping stylelint."
+    fi
 
   build:
     name: Build Website
