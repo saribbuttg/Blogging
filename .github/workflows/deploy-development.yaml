@@ -29,10 +29,10 @@ jobs:
       - name: Install dependencies
         run: npm install
 
-      - name: Build site with Parcel
+      - name: Build site
         run: npx parcel build src/index.html --dist-dir build
 
-      - name: Upload build artifact
+      - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
           path: build
