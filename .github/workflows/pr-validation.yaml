@@ -2,8 +2,6 @@ name: PR Validation
 
 on:
   pull_request:
-    branches:
-      - develop
 
 jobs:
   lint:
@@ -20,17 +18,13 @@ jobs:
           node-version: 18
 
       - name: Install dependencies
-        run: |
-          npm install -g htmlhint stylelint stylelint-config-standard
+        run: npm install
 
-      - name: Run HTMLHint
-        run: |
-          htmlhint "src/**/*.html"
+      - name: Run Stylelint on CSS
+        run: npx stylelint "styles/**/*.css"
 
-      - name: Run Stylelint
-        run: |
-          echo '{}' > .stylelintrc.json # Add rules later
-          stylelint "styles/**/*.css"
+      - name: Run HTMLHint on HTML
+        run: npx htmlhint "src/**/*.html"
 
   build:
     name: Build Website
@@ -45,11 +39,8 @@ jobs:
         with:
           node-version: 18
 
-      - name: Install Parcel and dependencies
-        run: |
-          npm install
-          npm install --save-dev parcel
+      - name: Install dependencies
+        run: npm install
 
-      - name: Run Parcel build
-        run: |
-          npx parcel build src/index.html --dist-dir build
+      - name: Build with Parcel
+        run: npx parcel build src/index.html --dist-dir build
